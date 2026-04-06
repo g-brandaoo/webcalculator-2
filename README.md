@@ -3,7 +3,7 @@
 Calculadora web com foco em experiência do usuário e funcionalidades avançadas.
 
 ## 🔗 Acesse
-https://g-brandaoo.github.io/webcalculator/
+https://g-brandaoo.github.io/webcalculator-2/
 
 ## ⚙️ Funcionalidades
 - Operações básicas
