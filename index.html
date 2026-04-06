@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora Moderna</title>
+  <link rel="stylesheet" href="style.css">
+<script src="js/script.js"></script>
+</head>
+<body>
+  <!-- Container principal da calculadora -->
+  <div class="calculator-container">
+    
+    <!-- Botão para alternar tema dark/light -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+      <!-- Ícone do sol (tema light) -->
+      <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <!-- Ícone da lua (tema dark) -->
+      <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
+
+    <!-- Calculadora -->
+    <div class="calculator">
+      
+      <!-- Display da calculadora -->
+      <div class="display">
+        <!-- Expressão anterior (histórico) -->
+        <div class="previous-operand" id="previousOperand"></div>
+        <!-- Valor atual sendo digitado -->
+        <div class="current-operand-wrapper">
+          <div class="current-operand" id="currentOperand">0</div>
+          <!-- Botão copiar resultado -->
+          <button class="copy-btn" id="copyBtn" aria-label="Copiar resultado">
+            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span class="copy-tooltip">Copiado!</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Grid de botões -->
+      <div class="buttons">
+        <!-- Primeira linha: C, DEL, %, ÷ -->
+        <button class="btn btn-function" data-action="clear">C</button>
+        <button class="btn btn-function" data-action="delete">DEL</button>
+        <button class="btn btn-function" data-action="percent">%</button>
+        <button class="btn btn-operator" data-action="operator" data-value="÷">÷</button>
+
+        <!-- Segunda linha: 7, 8, 9, × -->
+        <button class="btn btn-number" data-action="number" data-value="7">7</button>
+        <button class="btn btn-number" data-action="number" data-value="8">8</button>
+        <button class="btn btn-number" data-action="number" data-value="9">9</button>
+        <button class="btn btn-operator" data-action="operator" data-value="×">×</button>
+
+        <!-- Terceira linha: 4, 5, 6, - -->
+        <button class="btn btn-number" data-action="number" data-value="4">4</button>
+        <button class="btn btn-number" data-action="number" data-value="5">5</button>
+        <button class="btn btn-number" data-action="number" data-value="6">6</button>
+        <button class="btn btn-operator" data-action="operator" data-value="-">−</button>
+
+        <!-- Quarta linha: 1, 2, 3, + -->
+        <button class="btn btn-number" data-action="number" data-value="1">1</button>
+        <button class="btn btn-number" data-action="number" data-value="2">2</button>
+        <button class="btn btn-number" data-action="number" data-value="3">3</button>
+        <button class="btn btn-operator" data-action="operator" data-value="+">+</button>
+
+        <!-- Quinta linha: 00, 0, ., = -->
+        <button class="btn btn-number" data-action="number" data-value="00">00</button>
+        <button class="btn btn-number" data-action="number" data-value="0">0</button>
+        <button class="btn btn-number" data-action="decimal">.</button>
+        <button class="btn btn-equals" data-action="equals">=</button>
+      </div>
+    </div>
+
+    <!-- Painel de Histórico -->
+    <div class="history-panel" id="historyPanel">
+      <div class="history-header">
+        <h3 class="history-title">Historico</h3>
+        <button class="history-clear-btn" id="clearHistoryBtn" aria-label="Limpar histórico">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+          Limpar
+        </button>
+      </div>
+      <ul class="history-list" id="historyList">
+        <!-- Itens do histórico serão inseridos aqui via JavaScript -->
+      </ul>
+      <p class="history-empty" id="historyEmpty">Nenhum calculo realizado</p>
+    </div>
+
+    <!-- Dica de teclado -->
+    <p class="keyboard-hint">Use o teclado para digitar | Clique no historico para reutilizar</p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,702 @@
+/* ========================================
+   VARIÁVEIS CSS - SISTEMA DE TEMAS
+   Define as cores para os temas dark e light
+   ======================================== */
+
+:root {
+  /* Tema Dark (padrão) */
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #141414;
+  --bg-tertiary: #1f1f1f;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --text-muted: #666666;
+  --accent-primary: #3b82f6;
+  --accent-secondary: #60a5fa;
+  --btn-number: #262626;
+  --btn-number-hover: #333333;
+  --btn-function: #1e3a5f;
+  --btn-function-hover: #2563eb;
+  --btn-operator: #1e40af;
+  --btn-operator-hover: #2563eb;
+  --btn-equals: #3b82f6;
+  --btn-equals-hover: #60a5fa;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --border-color: #2a2a2a;
+  
+  /* Transições suaves */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+}
+
+/* Tema Light */
+[data-theme="light"] {
+  --bg-primary: #f5f5f5;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #e8e8e8;
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+  --text-muted: #999999;
+  --btn-number: #e5e5e5;
+  --btn-number-hover: #d4d4d4;
+  --btn-function: #bfdbfe;
+  --btn-function-hover: #93c5fd;
+  --btn-operator: #3b82f6;
+  --btn-operator-hover: #2563eb;
+  --btn-equals: #2563eb;
+  --btn-equals-hover: #1d4ed8;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --border-color: #d4d4d4;
+}
+
+/* ========================================
+   RESET E ESTILOS BASE
+   ======================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  transition: background-color var(--transition-normal);
+}
+
+/* ========================================
+   CONTAINER PRINCIPAL
+   ======================================== */
+
+.calculator-container {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+}
+
+/* ========================================
+   BOTÃO DE ALTERNAR TEMA
+   ======================================== */
+
+.theme-toggle {
+  position: absolute;
+  top: -50px;
+  right: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  z-index: 10;
+}
+
+.theme-toggle:hover {
+  background-color: var(--bg-tertiary);
+  transform: scale(1.05);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+/* Controle de visibilidade dos ícones */
+.sun-icon {
+  display: none;
+}
+
+.moon-icon {
+  display: block;
+}
+
+[data-theme="light"] .sun-icon {
+  display: block;
+}
+
+[data-theme="light"] .moon-icon {
+  display: none;
+}
+
+/* ========================================
+   CALCULADORA
+   ======================================== */
+
+.calculator {
+  background-color: var(--bg-secondary);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 
+    0 25px 50px -12px var(--shadow-color),
+    0 0 0 1px var(--border-color);
+  transition: all var(--transition-normal);
+}
+
+/* ========================================
+   DISPLAY
+   ======================================== */
+
+.display {
+  background-color: var(--bg-tertiary);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+/* Operando anterior (histórico da operação) */
+.previous-operand {
+  color: var(--text-muted);
+  font-size: 1rem;
+  min-height: 24px;
+  word-wrap: break-word;
+  word-break: break-all;
+  text-align: right;
+  width: 100%;
+  margin-bottom: 8px;
+  transition: color var(--transition-normal);
+}
+
+/* Wrapper do operando atual com botão de copiar */
+.current-operand-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  gap: 12px;
+}
+
+/* Operando atual (número sendo digitado) */
+.current-operand {
+  color: var(--text-primary);
+  font-size: 2.5rem;
+  font-weight: 300;
+  word-wrap: break-word;
+  word-break: break-all;
+  text-align: right;
+  flex: 1;
+  line-height: 1.2;
+  transition: color var(--transition-normal);
+}
+
+/* ========================================
+   BOTAO DE COPIAR
+   ======================================== */
+
+.copy-btn {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.copy-btn:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  transform: scale(1.05);
+}
+
+.copy-btn:active {
+  transform: scale(0.95);
+}
+
+.copy-btn .check-icon {
+  display: none;
+  color: #22c55e;
+}
+
+.copy-btn.copied .copy-icon {
+  display: none;
+}
+
+.copy-btn.copied .check-icon {
+  display: block;
+}
+
+.copy-btn.copied {
+  border-color: #22c55e;
+  background-color: rgba(34, 197, 94, 0.1);
+}
+
+/* Tooltip de copiado */
+.copy-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.8);
+  background-color: var(--text-primary);
+  color: var(--bg-primary);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-fast);
+  pointer-events: none;
+}
+
+.copy-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--text-primary);
+}
+
+.copy-btn.copied .copy-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) scale(1);
+}
+
+/* ========================================
+   GRID DE BOTÕES
+   ======================================== */
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+/* ========================================
+   ESTILOS DOS BOTÕES
+   ======================================== */
+
+.btn {
+  height: 70px;
+  border: none;
+  border-radius: 16px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transform-origin: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Efeito de ripple (onda) ao clicar */
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.5s ease-out, height 0.5s ease-out, opacity 0.5s ease-out;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.btn:active::before {
+  width: 250px;
+  height: 250px;
+  opacity: 1;
+  transition: width 0s, height 0s, opacity 0s;
+}
+
+/* Brilho sutil no hover */
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  pointer-events: none;
+}
+
+.btn:hover::after {
+  opacity: 1;
+}
+
+/* Botões de números */
+.btn-number {
+  background-color: var(--btn-number);
+  color: var(--text-primary);
+}
+
+.btn-number:hover {
+  background-color: var(--btn-number-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-number:active {
+  transform: translateY(0) scale(0.96);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Botões de função (C, DEL, %) */
+.btn-function {
+  background-color: var(--btn-function);
+  color: var(--text-primary);
+}
+
+.btn-function:hover {
+  background-color: var(--btn-function-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(37, 99, 235, 0.2);
+}
+
+.btn-function:active {
+  transform: translateY(0) scale(0.96);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Botões de operadores (+, -, ×, ÷) */
+.btn-operator {
+  background-color: var(--btn-operator);
+  color: #ffffff;
+}
+
+.btn-operator:hover {
+  background-color: var(--btn-operator-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+}
+
+.btn-operator:active {
+  transform: translateY(0) scale(0.96);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Botão de igual */
+.btn-equals {
+  background-color: var(--btn-equals);
+  color: #ffffff;
+}
+
+.btn-equals:hover {
+  background-color: var(--btn-equals-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+}
+
+.btn-equals:active {
+  transform: translateY(0) scale(0.96);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Estado pressionado (feedback visual via JavaScript) */
+.btn.pressed {
+  transform: scale(0.92);
+  opacity: 0.85;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   PAINEL DE HISTORICO
+   ======================================== */
+
+.history-panel {
+  background-color: var(--bg-secondary);
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 16px;
+  box-shadow: 
+    0 10px 25px -5px var(--shadow-color),
+    0 0 0 1px var(--border-color);
+  transition: all var(--transition-normal);
+  max-height: 280px;
+  display: flex;
+  flex-direction: column;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.history-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.history-clear-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: transparent;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.history-clear-btn:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.history-clear-btn:active {
+  transform: scale(0.95);
+}
+
+.history-list {
+  list-style: none;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 4px;
+}
+
+/* Scrollbar personalizada */
+.history-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.history-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.history-list::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 4px;
+}
+
+.history-list::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text-muted);
+}
+
+.history-item {
+  padding: 12px 14px;
+  background-color: var(--bg-tertiary);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: 1px solid transparent;
+}
+
+.history-item:hover {
+  background-color: var(--btn-number-hover);
+  border-color: var(--accent-primary);
+  transform: translateX(4px);
+}
+
+.history-item:active {
+  transform: translateX(4px) scale(0.98);
+}
+
+.history-expression {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  word-break: break-all;
+}
+
+.history-result {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  word-break: break-all;
+}
+
+.history-empty {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  padding: 24px 0;
+  font-style: italic;
+}
+
+.history-empty.hidden {
+  display: none;
+}
+
+/* Animação de entrada do item */
+@keyframes historySlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.history-item {
+  animation: historySlideIn 0.3s ease-out;
+}
+
+/* ========================================
+   DICA DE TECLADO
+   ======================================== */
+
+.keyboard-hint {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  margin-top: 20px;
+  transition: color var(--transition-normal);
+  line-height: 1.5;
+}
+
+/* ========================================
+   ANIMAÇÕES
+   ======================================== */
+
+/* Animação de entrada */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.calculator {
+  animation: slideIn 0.5s ease-out;
+}
+
+/* Animação de shake para erros */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.display.error {
+  animation: shake 0.5s ease;
+}
+
+/* Animação de brilho no resultado */
+@keyframes glow {
+  0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+  50% { box-shadow: 0 0 20px 5px rgba(59, 130, 246, 0.2); }
+  100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+}
+
+.display.result {
+  animation: glow 0.5s ease;
+}
+
+/* ========================================
+   RESPONSIVIDADE
+   ======================================== */
+
+/* Tablets e telas menores */
+@media (max-width: 420px) {
+  .calculator {
+    padding: 16px;
+    border-radius: 20px;
+  }
+  
+  .display {
+    padding: 20px;
+    min-height: 100px;
+    border-radius: 12px;
+  }
+  
+  .current-operand {
+    font-size: 2rem;
+  }
+  
+  .buttons {
+    gap: 10px;
+  }
+  
+  .btn {
+    height: 60px;
+    font-size: 1.25rem;
+    border-radius: 12px;
+  }
+  
+  .theme-toggle {
+    width: 40px;
+    height: 40px;
+    top: -45px;
+  }
+}
+
+/* Telas muito pequenas */
+@media (max-width: 350px) {
+  .calculator-container {
+    max-width: 100%;
+  }
+  
+  .btn {
+    height: 55px;
+    font-size: 1.125rem;
+  }
+  
+  .current-operand {
+    font-size: 1.75rem;
+  }
+}
+
+/* ========================================
+   ACESSIBILIDADE
+   ======================================== */
+
+/* Foco visível para navegação por teclado */
+.btn:focus-visible,
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Reduzir movimento para usuários que preferem */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
