@@ -4,6 +4,7 @@ Calculadora web com foco em experiência do usuário e funcionalidades avançada
 
 ## 🔗 Acesse
 https://g-brandaoo.github.io/webcalculator-2/
+https://webcalculator-2.vercel.app/
 
 ## ⚙️ Funcionalidades
 - Operações básicas
