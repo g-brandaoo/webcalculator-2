@@ -4,7 +4,7 @@ Calculadora web com foco em experiência do usuário e funcionalidades avançada
 
 ## 🔗 Acesse
 
-https://bit.ly/gbr-webcalculator
+https://g-brandaoo.github.io/webcalculator/
 
 ## ⚙️ Funcionalidades
 - Operações básicas
