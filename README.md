@@ -1,4 +1,4 @@
-# Web Calculator V2
+# Web Calculator 
 
 Calculadora web com foco em experiência do usuário e funcionalidades avançadas.
 
@@ -12,7 +12,6 @@ https://webcalculator-2.vercel.app/
 - Reutilização de resultados
 - Persistência com localStorage
 - Copiar resultado com feedback
-- Suporte a teclado
 
 ## 🛠️ Tecnologias
 - HTML
@@ -20,4 +19,4 @@ https://webcalculator-2.vercel.app/
 - JavaScript
 
 ## 📌 Objetivo
-Evoluir de uma calculadora simples (V1) para uma aplicação com melhor UX e organização de código.
+Criar uma aplicação com melhor UX e organização de código.
